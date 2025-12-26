@@ -44,14 +44,14 @@ class BaseOptimizedViewSet(viewsets.ModelViewSet):
         manager = model_cls._default_manager
 
         if hasattr(manager, 'simple') and self.action == 'list':
-            log.library("| LIBRERIA | Usando QS simple")
+            #log.library("| LIBRERIA | Usando QS simple")
             qs = manager.simple()
         elif hasattr(manager, 'full'):
-            log.library("| LIBRERIA | Usando QS full")
+            #log.library("| LIBRERIA | Usando QS full")
             qs = manager.full()
 
         try:
-            log.library("| LIBRERIA | Filtrando por created_by")
+            #log.library("| LIBRERIA | Filtrando por created_by")
             qs_created_by= qs.filter(created_by=self.request.user)
             return qs_created_by
         except Exception as e:
@@ -81,7 +81,7 @@ class BaseOptimizedViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         try:
-            log.library("| LIBRERIA |Guardando con created_by y updated_by")
+            #log.library("| LIBRERIA |Guardando con created_by y updated_by")
             serializer.save(created_by=self.request.user, updated_by=self.request.user)
         except Exception as e:
             log.error(f"| LIBRERIA | Error al guardar: {e}")
@@ -90,7 +90,7 @@ class BaseOptimizedViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         try:
-            log.library("| LIBRERIA | Guardando con updated_by")
+            #log.library("| LIBRERIA | Guardando con updated_by")
             serializer.save(updated_by=self.request.user)
         except Exception as e:
             log.error(f"| LIBRERIA | Error al actualizar: {e}")
